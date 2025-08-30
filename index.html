@@ -4,58 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Station P4.1 – Gastroenterologie & Diabetologie</title>
-  <meta name="description" content="Station P4.1 – Versorgung von Patientinnen und Patienten mit gastroenterologischen Erkrankungen und Diabetologie am CCB Braunschweig." />
   <style>
-    :root{
-      --bg:#ffffff;
-      --fg:#0f172a;
-      --muted:#475569;
-      --accent:#0ea5e9;
-      --maxw: 920px;
-      --glass: color-mix(in oklab, var(--fg) 12%, transparent);
-    }
-    @media (prefers-color-scheme: dark){
-      :root{ --bg:#0b1020; --fg:#e5e7eb; --muted:#9ca3af; --accent:#38bdf8; --glass: color-mix(in oklab, var(--fg) 20%, transparent); }
-    }
-    body{
-      margin:0; background:var(--bg); color:var(--fg);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      line-height:1.6;
-    }
-    .lang-btn{
-      position: fixed; top: 14px; right: 14px; z-index: 10;
-      padding: 8px 12px; border-radius: 999px; font-weight:600;
-      background: color-mix(in oklab, var(--bg) 40%, transparent);
-      color: var(--fg);
-      border: 1px solid var(--glass);
-      backdrop-filter: blur(6px);
-      cursor: pointer;
-    }
-    .header{ max-width:var(--maxw); margin:32px auto 16px; padding:0 20px; position:relative; }
-    h1{ margin:0 0 12px; font-size:clamp(28px,4vw,40px); line-height:1.2; }
-    .lead{ color:var(--muted); font-size:clamp(16px,1.4vw,18px); }
-    .lead strong{ font-weight:700; }
-
-    /* Speaker icon */
+    body{margin:0;font-family:sans-serif;line-height:1.6;background:#fff;color:#111;}
+    .lang-btn{position:fixed;top:14px;right:14px;z-index:10;padding:8px 12px;border-radius:999px;font-weight:600;cursor:pointer;}
+    .header{max-width:920px;margin:32px auto 16px;padding:0 20px;}
+    h1{margin:0 0 12px;font-size:clamp(28px,4vw,40px);} 
+    .lead{font-size:18px;}
+    .lead strong{font-weight:700;}
     .speaker{
-      width: 44px; height:44px; margin-left:12px; vertical-align:middle; cursor:pointer;
+      width:44px; height:44px; margin-left:12px; vertical-align:middle; cursor:pointer;
       opacity:.95; transition:transform .1s ease;
       display:inline-block; background-size:cover; background-position:center;
+      border-radius:999px; border:1px solid #cbd5e1; background-color: rgba(15,23,42,.08);
     }
-
-    .hero img{ display:block; width:100%; height:56.25vw; max-height:70vh; object-fit:cover; background:#000; }
-    .content{ max-width:var(--maxw); margin:0 auto; padding:0 20px 40px; }
-    .content p{ margin:0 0 16px; font-size:clamp(16px,1.4vw,19px); }
-    .logo-wrap{ display:grid; place-items:center; margin:32px 0; }
-    .logo{ max-width:min(260px, 50vw); height:auto; }
-    .contact{ max-width:var(--maxw); margin:8px auto 64px; padding:0 20px; border-top:1px solid #ccc; }
-    .contact h2{ font-size:clamp(20px,2.6vw,26px); margin:18px 0 8px; }
-    address{ font-style:normal; color:var(--muted); }
-    .contact a{ color:var(--accent); text-decoration:none; }
-    .contact a:hover{ text-decoration:underline; }
-    footer{ max-width:var(--maxw); margin:0 auto 40px; padding:0 20px; color:var(--muted); font-size:14px; }
-    .lang{ display:none; }
-    .lang.active{ display:block; }
+    .hero img{display:block;width:100%;height:auto;}
+    .content{max-width:920px;margin:0 auto;padding:0 20px 40px;}
+    .logo-wrap{display:grid;place-items:center;margin:32px 0;}
+    .logo{max-width:260px;height:auto;}
+    .contact{max-width:920px;margin:8px auto 64px;padding:0 20px;border-top:1px solid #ccc;}
+    .contact h2{font-size:24px;margin:18px 0 8px;}
+    address{font-style:normal;}
+    footer{max-width:920px;margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
+    .lang{display:none;}
+    .lang.active{display:block;}
   </style>
 </head>
 <body>
@@ -65,8 +36,8 @@
     <h1 class="lang lang-de active">Station P4.1 – Gastroenterologie &amp; Diabetologie</h1>
     <h1 class="lang lang-en">Ward P4.1 – Gastroenterology and Diabetology</h1>
 
-    <p class="lead lang lang-de active"><strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong> <span id="speakerBtn" class="speaker" style="background-image:url('Speaker0.jpg');" title="Vorlesen"></span></p>
-    <p class="lead lang lang-en"><strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong> <span id="speakerBtnClone" class="speaker" style="background-image:url('Speaker0.jpg');" title="Read aloud"></span></p>
+    <p class="lead lang lang-de active"><strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong> <img id="speakerBtn" class="speaker" src="Speaker0.jpg" alt="Vorlesen"></p>
+    <p class="lead lang lang-en"><strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong> <img id="speakerBtnClone" class="speaker" src="Speaker0.jpg" alt="Read aloud"></p>
   </header>
 
   <section class="hero">
@@ -113,43 +84,38 @@
   <audio id="audEN" src="SoundEN.mp3" preload="auto"></audio>
 
   <script>
-    const y = new Date().getFullYear();
-    document.getElementById('year').textContent = y;
-    document.getElementById('year2').textContent = y;
+    const y=new Date().getFullYear();
+    document.getElementById('year').textContent=y;
+    document.getElementById('year2').textContent=y;
 
-    let current = 'de';
-    const btn = document.getElementById('langToggle');
+    let current='de';
+    const btn=document.getElementById('langToggle');
     function setLang(lang){
-      current = lang;
+      current=lang;
       document.querySelectorAll('.lang').forEach(el=>{
-        el.classList.toggle('active', el.classList.contains('lang-' + lang));
+        el.classList.toggle('active',el.classList.contains('lang-'+lang));
       });
-      btn.textContent = (lang === 'de') ? 'EN' : 'DE';
-      document.documentElement.setAttribute('lang', lang);
-      stopAllAudio(); setSpeakerIdle();
+      btn.textContent=(lang==='de')?'EN':'DE';
     }
-    btn.addEventListener('click', ()=> setLang(current === 'de' ? 'en' : 'de'));
+    btn.addEventListener('click',()=>setLang(current==='de'?'en':'de'));
 
-    const imgDE = document.getElementById('speakerBtn');
-    const imgEN = document.getElementById('speakerBtnClone');
-    const audDE = document.getElementById('audDE');
-    const audEN = document.getElementById('audEN');
+    const imgDE=document.getElementById('speakerBtn');
+    const imgEN=document.getElementById('speakerBtnClone');
+    const audDE=document.getElementById('audDE');
+    const audEN=document.getElementById('audEN');
 
-    const idleSrc = "Speaker0.jpg";
-    const activeSrc = "Speaker.jpg";
-
-    function stopAllAudio(){ [audDE,audEN].forEach(a=>{ a.pause(); a.currentTime=0; }); }
-    function setSpeakerIdle(){ imgDE.style.backgroundImage = `url(${idleSrc})`; imgEN.style.backgroundImage = `url(${idleSrc})`; }
-    function setSpeakerActive(){ imgDE.style.backgroundImage = `url(${activeSrc})`; imgEN.style.backgroundImage = `url(${activeSrc})`; }
+    function stopAll(){[audDE,audEN].forEach(a=>{a.pause();a.currentTime=0;});}
+    function setIdle(){imgDE.src='Speaker0.jpg';imgEN.src='Speaker0.jpg';}
+    function setActive(){imgDE.src='Speaker.jpg';imgEN.src='Speaker.jpg';}
 
     function handleSpeak(){
-      const audio = current==='de'? audDE:audEN;
-      if (!audio.paused && audio.currentTime>0 && !audio.ended){ stopAllAudio(); setSpeakerIdle(); return; }
-      stopAllAudio(); setSpeakerActive(); audio.currentTime=0; audio.play().catch(()=>{});
-      audio.onended=()=> setSpeakerIdle();
+      const audio=current==='de'?audDE:audEN;
+      if(!audio.paused&&audio.currentTime>0&&!audio.ended){stopAll();setIdle();return;}
+      stopAll();setActive();audio.currentTime=0;audio.play().catch(()=>{});
+      audio.onended=()=>setIdle();
     }
-    imgDE.addEventListener('click', handleSpeak);
-    imgEN.addEventListener('click', handleSpeak);
+    imgDE.addEventListener('click',handleSpeak);
+    imgEN.addEventListener('click',handleSpeak);
   </script>
 </body>
 </html>
