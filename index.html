@@ -6,56 +6,68 @@
   <title>Station P4.1 – Gastroenterologie & Diabetologie</title>
   <style>
     :root{
-      --fg:#0f172a;
-      --muted:#475569;
       --border:#cbd5e1;
-      --chip-bg: rgba(15,23,42,.08);
+      --bg:#ffffff;
+      --fg:#111111;
+      --muted:#475569;
       --maxw:920px;
+      --hover:#f8fafc;
     }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;background:#fff;color:#111;}
-    .lang-btn{
-      position:fixed;top:14px;right:14px;z-index:10;padding:8px 12px;border-radius:999px;
-      font-weight:600;cursor:pointer;border:1px solid var(--border);background:#fff;color:#111;
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;background:var(--bg);color:var(--fg);}
+    /* универсальный стиль «пилюля» */
+    .chip{
+      display:inline-flex; align-items:center; gap:.4rem;
+      padding:.5rem .75rem; border-radius:999px;
+      border:1px solid var(--border); background:transparent; color:var(--fg);
+      font-weight:600; cursor:pointer; user-select:none;
+      line-height:1; -webkit-tap-highlight-color: transparent;
     }
-    .lang-btn:hover{background:#f8fafc}
+    .chip:hover{ background:var(--hover); }
+    .chip:focus-visible{ outline:2px solid #94a3b8; outline-offset:2px; }
+
+    .lang-btn{ position:fixed; top:14px; right:14px; z-index:10; }
+
     .header{max-width:var(--maxw);margin:32px auto 16px;padding:0 20px;}
     h1{margin:0 0 12px;font-size:clamp(28px,4vw,40px);}
-    .lead{font-size:18px;color:var(--muted);}
-    .lead strong{font-weight:700;color:#111;}
-    /* Видимая, контрастная кнопка-спикер */
-    .speaker{
-      width:44px;height:44px;margin-left:12px;vertical-align:middle;cursor:pointer;
-      display:inline-block;object-fit:contain;transition:transform .08s ease, filter .15s ease;
-      border-radius:999px;border:1px solid var(--border);background-color:var(--chip-bg);
-    }
-    .speaker:hover{transform:scale(1.03);filter:contrast(1.1);}
+    .lead{font-size:18px;color:var(--muted);margin:0;}
+    .lead strong{font-weight:700;color:var(--fg);}
+    .lead .play-wrap{ display:inline-flex; align-items:center; margin-left:.5rem; }
+
     .hero img{display:block;width:100%;height:auto;background:#000;}
     .content{max-width:var(--maxw);margin:0 auto;padding:0 20px 40px;}
     .content p{margin:0 0 16px;font-size:clamp(16px,1.4vw,19px);}
     .logo-wrap{display:grid;place-items:center;margin:32px 0;}
-    .logo{max-width:260px;height:auto}
-    .contact{max-width:var(--maxw);margin:8px auto 64px;padding:0 20px;border-top:1px solid #e5e7eb;}
+    .logo{max-width:260px;height:auto;}
+    .contact{max-width:var(--maxw);margin:8px auto 64px;padding:0 20px;border-top:1px solid var(--border);}
     .contact h2{font-size:24px;margin:18px 0 8px;}
     address{font-style:normal}
     footer{max-width:var(--maxw);margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
+
     .lang{display:none;}
     .lang.active{display:block;}
   </style>
 </head>
 <body>
-  <button id="langToggle" class="lang-btn" aria-label="Sprache wechseln">EN</button>
+  <!-- переключатель языка -->
+  <button id="langToggle" class="chip lang-btn" aria-label="Sprache wechseln">EN</button>
 
   <header class="header">
     <h1 class="lang lang-de active">Station P4.1 – Gastroenterologie &amp; Diabetologie</h1>
     <h1 class="lang lang-en">Ward P4.1 – Gastroenterology and Diabetology</h1>
 
+    <!-- lead + кнопка прослушивания -->
     <p class="lead lang lang-de active">
       <strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong>
-      <img id="speakerBtn" class="speaker" src="Speaker0.png" alt="Vorlesen" title="Vorlesen">
+      <span class="play-wrap">
+        <button id="playDE" class="chip" aria-label="Text anhören">Anhören</button>
+      </span>
     </p>
+
     <p class="lead lang lang-en">
       <strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong>
-      <img id="speakerBtnClone" class="speaker" src="Speaker0.png" alt="Read aloud" title="Read aloud">
+      <span class="play-wrap">
+        <button id="playEN" class="chip" aria-label="Listen to the text">Listen</button>
+      </span>
     </p>
   </header>
 
@@ -105,59 +117,69 @@
     <p class="lang lang-en">© <span id="year2"></span> Ward P4.1 – CCB Braunschweig. All rights reserved.</p>
   </footer>
 
-  <!-- Audio -->
+  <!-- Audio файлы -->
   <audio id="audDE" src="SoundDE.mp3" preload="auto"></audio>
   <audio id="audEN" src="SoundEN.mp3" preload="auto"></audio>
 
   <script>
-    // Годы в подвале
+    // Годы
     const y=new Date().getFullYear();
     document.getElementById('year').textContent=y;
     document.getElementById('year2').textContent=y;
 
     // Переключение языка
     let current='de';
-    const btn=document.getElementById('langToggle');
+    const langBtn=document.getElementById('langToggle');
     function setLang(lang){
       current=lang;
       document.querySelectorAll('.lang').forEach(el=>{
         el.classList.toggle('active', el.classList.contains('lang-'+lang));
       });
-      btn.textContent=(lang==='de')?'EN':'DE';
-      stopAll(); // останавливаем озвучку при смене языка
-      setIdle();
+      langBtn.textContent=(lang==='de')?'EN':'DE';
+      // сбрасываем аудио и подписи кнопок при смене языка
+      stopAll();
+      updatePlayLabels(false);
       document.documentElement.setAttribute('lang', lang);
     }
-    btn.addEventListener('click',()=>setLang(current==='de'?'en':'de'));
+    langBtn.addEventListener('click',()=>setLang(current==='de'?'en':'de'));
 
-    // Озвучка
-    const imgDE=document.getElementById('speakerBtn');
-    const imgEN=document.getElementById('speakerBtnClone');
+    // Проигрывание
+    const playDE=document.getElementById('playDE');
+    const playEN=document.getElementById('playEN');
     const audDE=document.getElementById('audDE');
     const audEN=document.getElementById('audEN');
 
     function stopAll(){ [audDE,audEN].forEach(a=>{ try{ a.pause(); a.currentTime=0; }catch(e){} }); }
-    function setIdle(){ imgDE.src='Speaker0.png'; imgEN.src='Speaker0.png'; }
-    function setActive(){ imgDE.src='Speaker.png'; imgEN.src='Speaker.png'; }
 
-    function handleSpeak(){
-      const audio = (current==='de') ? audDE : audEN;
+    function isPlaying(a){ return !a.paused && a.currentTime>0 && !a.ended; }
 
-      // если уже играет — остановить и вернуть икону
-      if(!audio.paused && audio.currentTime>0 && !audio.ended){
-        stopAll(); setIdle(); return;
-      }
-
-      stopAll(); setActive(); audio.currentTime=0;
-      const p = audio.play();
-      if(p && typeof p.catch==='function'){ p.catch(()=>{}); }
-
-      const onEnd=()=>{ setIdle(); audio.removeEventListener('ended',onEnd); };
-      audio.addEventListener('ended',onEnd);
+    function updatePlayLabels(playing){
+      // показываем правильные подписи для обеих кнопок, даже если одна скрыта
+      playDE.textContent = playing ? 'Stop' : 'Anhören';
+      playEN.textContent = playing ? 'Stop'  : 'Listen';
+      playDE.setAttribute('aria-pressed', playing ? 'true':'false');
+      playEN.setAttribute('aria-pressed', playing ? 'true':'false');
     }
-    imgDE.addEventListener('click',handleSpeak);
-    imgEN.addEventListener('click',handleSpeak);
+
+    function handlePlay(){
+      const audio = (current==='de') ? audDE : audEN;
+      const other = (current==='de') ? audEN : audDE;
+
+      // если уже играет — остановить
+      if(isPlaying(audio)){ stopAll(); updatePlayLabels(false); return; }
+
+      // старт
+      stopAll();
+      audio.currentTime=0;
+      updatePlayLabels(true);
+      const p = audio.play();
+      if(p && typeof p.catch==='function') p.catch(()=>{ /* блокировка автоплея не должна срабатывать, есть жест */ });
+
+      audio.onended = ()=> updatePlayLabels(false);
+    }
+
+    playDE.addEventListener('click', handlePlay);
+    playEN.addEventListener('click', handlePlay);
   </script>
 </body>
 </html>
-
