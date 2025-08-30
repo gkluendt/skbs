@@ -35,10 +35,17 @@
     }
     .lang-btn:hover{ border-color: color-mix(in oklab, var(--accent) 60%, var(--glass)); }
 
-    .header{ max-width:var(--maxw); margin:32px auto 16px; padding:0 20px; }
+    .header{ max-width:var(--maxw); margin:32px auto 16px; padding:0 20px; position:relative; }
     h1{ margin:0 0 12px; font-size:clamp(28px,4vw,40px); line-height:1.2; letter-spacing:0.2px; }
     .lead{ color:var(--muted); font-size:clamp(16px,1.4vw,18px); }
     .lead strong{ font-weight:700; }
+
+    /* Speaker icon */
+    .speaker{
+      width: 44px; height:auto; margin-left:12px; vertical-align:middle; cursor:pointer;
+      opacity:.9; transition:transform .1s ease, opacity .15s ease;
+    }
+    .speaker:hover{ opacity:1; transform:scale(1.02); }
 
     .hero{ margin: 16px 0 32px; }
     .hero img{ display:block; width:100%; height:56.25vw; max-height:70vh; object-fit:cover; background:#000; }
@@ -76,8 +83,8 @@
     <h1 class="lang lang-de active">Station P4.1 – Gastroenterologie &amp; Diabetologie</h1>
     <h1 class="lang lang-en">Ward P4.1 – Gastroenterology and Diabetology</h1>
 
-    <p class="lead lang lang-de active"><strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong></p>
-    <p class="lead lang lang-en"><strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong></p>
+    <p class="lead lang lang-de active"><strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong> <img id="speakerBtn" class="speaker" src="Speaker0.jpg" alt="Vorlesen / Read aloud" title="Vorlesen / Read aloud"></p>
+    <p class="lead lang lang-en"><strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong> <img id="speakerBtnClone" class="speaker" src="Speaker0.jpg" alt="Read aloud" title="Read aloud"></p>
   </header>
 
   <section class="hero" aria-label="Titelbild">
@@ -111,7 +118,7 @@
       <div class="lang lang-de active"><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
       <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</strong></div>
 
-      <div class="lang lang-de active">Adresse: <span id="addr">&lt;Fichtengrund 1, 38126 Braunschweig;</span></div>
+      <div class="lang lang-de active">Adresse: <span id="addr">&lt;Fichtengrund 1, 38126 Braunschweig&gt;</span></div>
       <div class="lang lang-en">Address: <span>&lt;Fichtengrund 1, 38126 Braunschweig&gt;</span></div>
 
       <div>E‑Mail / Email: <a id="mail" href="mailto:kontakt@example.org">kontakt@example.org</a></div>
@@ -125,6 +132,10 @@
     <p class="lang lang-de active">© <span id="year"></span> Station P4.1 – CCB Braunschweig. Alle Rechte vorbehalten.</p>
     <p class="lang lang-en">© <span id="year2"></span> Ward P4.1 – CCB Braunschweig. All rights reserved.</p>
   </footer>
+
+  <!-- Audio elements (preloaded) -->
+  <audio id="audDE" src="SoundDE.mp3" preload="auto"></audio>
+  <audio id="audEN" src="SoundEN.mp3" preload="auto"></audio>
 
   <script>
     // Footer years
@@ -140,12 +151,62 @@
       document.querySelectorAll('.lang').forEach(el=>{
         el.classList.toggle('active', el.classList.contains('lang-' + lang));
       });
-      // Button label shows the other language as a hint
       btn.textContent = (lang === 'de') ? 'EN' : 'DE';
-      // Update html lang attribute for accessibility
       document.documentElement.setAttribute('lang', lang === 'de' ? 'de' : 'en');
+
+      // If audio is playing, stop it and reset speaker icon on language change
+      stopAllAudio();
+      setSpeakerIdle();
     }
     btn.addEventListener('click', ()=> setLang(current === 'de' ? 'en' : 'de'));
+
+    // Speaker logic
+    const imgDE = document.getElementById('speakerBtn');
+    const imgEN = document.getElementById('speakerBtnClone');
+    const audDE = document.getElementById('audDE');
+    const audEN = document.getElementById('audEN');
+    const idleSrc = 'Speaker0.jpg';
+    const activeSrc = 'Speaker.jpg';
+
+    function stopAllAudio(){
+      [audDE, audEN].forEach(a=>{ try{ a.pause(); a.currentTime = 0; }catch(e){} });
+    }
+    function setSpeakerIdle(){
+      imgDE.src = idleSrc;
+      imgEN.src = idleSrc;
+    }
+    function setSpeakerActive(){
+      imgDE.src = activeSrc;
+      imgEN.src = activeSrc;
+    }
+
+    function handleSpeak(){
+      const audio = current === 'de' ? audDE : audEN;
+
+      // if currently playing → stop and revert icon
+      if (!audio.paused && audio.currentTime > 0 && !audio.ended){
+        stopAllAudio();
+        setSpeakerIdle();
+        return;
+      }
+
+      stopAllAudio();
+      setSpeakerActive();
+      audio.currentTime = 0;
+      const playPromise = audio.play();
+      if (playPromise !== undefined){
+        playPromise.catch(()=>{ /* autoplay blocked until user gesture; clicking image counts as gesture */ });
+      }
+
+      const onEnd = ()=>{
+        setSpeakerIdle();
+        audio.removeEventListener('ended', onEnd);
+      };
+      audio.addEventListener('ended', onEnd);
+    }
+
+    imgDE.addEventListener('click', handleSpeak);
+    imgEN.addEventListener('click', handleSpeak);
   </script>
 </body>
 </html>
