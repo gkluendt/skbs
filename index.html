@@ -12,9 +12,10 @@
       --muted:#475569; /* slate-600 */
       --accent:#0ea5e9; /* sky-500 */
       --maxw: 920px;
+      --glass: color-mix(in oklab, var(--fg) 12%, transparent);
     }
     @media (prefers-color-scheme: dark){
-      :root{ --bg:#0b1020; --fg:#e5e7eb; --muted:#9ca3af; --accent:#38bdf8; }
+      :root{ --bg:#0b1020; --fg:#e5e7eb; --muted:#9ca3af; --accent:#38bdf8; --glass: color-mix(in oklab, var(--fg) 20%, transparent); }
     }
     html,body{height:100%;}
     body{
@@ -22,93 +23,129 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       line-height:1.6;
     }
-    .header{
-      max-width:var(--maxw); margin:32px auto 16px; padding:0 20px;
+    /* Language toggle button */
+    .lang-btn{
+      position: fixed; top: 14px; right: 14px; z-index: 10;
+      padding: 8px 12px; border-radius: 999px; font-weight:600; letter-spacing:.3px;
+      background: color-mix(in oklab, var(--bg) 40%, transparent);
+      color: var(--fg);
+      border: 1px solid var(--glass);
+      backdrop-filter: blur(6px);
+      cursor: pointer; user-select: none;
     }
-    h1{
-      margin:0 0 12px; font-size:clamp(28px,4vw,40px); line-height:1.2;
-      letter-spacing:0.2px;
-    }
-    .lead{
-      color:var(--muted); font-size:clamp(16px,1.4vw,18px);
-      font-weight:600; /* выделено жирнее */
-    }
-    .hero{
-      margin: 16px 0 32px;
-    }
-    .hero img{
-      display:block; width:100%; height:56.25vw; max-height:70vh; object-fit:cover;
-      background:#000;
-    }
+    .lang-btn:hover{ border-color: color-mix(in oklab, var(--accent) 60%, var(--glass)); }
+
+    .header{ max-width:var(--maxw); margin:32px auto 16px; padding:0 20px; }
+    h1{ margin:0 0 12px; font-size:clamp(28px,4vw,40px); line-height:1.2; letter-spacing:0.2px; }
+    .lead{ color:var(--muted); font-size:clamp(16px,1.4vw,18px); }
+    .lead strong{ font-weight:700; }
+
+    .hero{ margin: 16px 0 32px; }
+    .hero img{ display:block; width:100%; height:56.25vw; max-height:70vh; object-fit:cover; background:#000; }
 
     .content{ max-width:var(--maxw); margin:0 auto; padding:0 20px 40px; }
     .content p{ margin:0 0 16px; font-size:clamp(16px,1.4vw,19px); }
 
     .logo-wrap{ display:grid; place-items:center; margin:32px 0; }
-    .logo{
-      max-width:min(260px, 50vw); height:auto; display:block; filter: drop-shadow(0 4px 16px rgba(0,0,0,.08));
-    }
+    .logo{ max-width:min(260px, 50vw); height:auto; display:block; filter: drop-shadow(0 4px 16px rgba(0,0,0,.08)); }
 
-    .contact{
-      max-width:var(--maxw); margin:8px auto 64px; padding:0 20px;
-      border-top:1px solid color-mix(in oklab, var(--muted) 24%, transparent);
-    }
+    .contact{ max-width:var(--maxw); margin:8px auto 64px; padding:0 20px; border-top:1px solid color-mix(in oklab, var(--muted) 24%, transparent); }
     .contact h2{ font-size:clamp(20px,2.6vw,26px); margin:18px 0 8px; }
     address{ font-style:normal; color:var(--muted); }
     .contact a{ color:var(--accent); text-decoration:none; }
     .contact a:hover{ text-decoration:underline; }
 
-    footer{
-      max-width:var(--maxw); margin:0 auto 40px; padding:0 20px; color:var(--muted);
-      font-size:14px;
-    }
+    footer{ max-width:var(--maxw); margin:0 auto 40px; padding:0 20px; color:var(--muted); font-size:14px; }
+
+    /* Language visibility */
+    .lang{ display:none; }
+    .lang.active{ display:block; }
 
     @media print{
       .hero img{ height:auto; max-height:none; }
       .logo{ max-width:200px; }
       .contact, footer{ border-top:0; }
+      .lang-btn{ display:none; }
     }
   </style>
 </head>
 <body>
+  <button id="langToggle" class="lang-btn" aria-label="Sprache wechseln">EN</button>
+
   <header class="header">
-    <h1>Station P4.1 – Gastroenterologie &amp; Diabetologie</h1>
-    <p class="lead"><strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong></p>
+    <h1 class="lang lang-de active">Station P4.1 – Gastroenterologie &amp; Diabetologie</h1>
+    <h1 class="lang lang-en">Ward P4.1 – Gastroenterology and Diabetology</h1>
+
+    <p class="lead lang lang-de active"><strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong></p>
+    <p class="lead lang lang-en"><strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong></p>
   </header>
 
   <section class="hero" aria-label="Titelbild">
-    <img src="Foto1.jpg" alt="Station P4.1 – Titelbild" />
+    <img src="Foto1.jpg" alt="Titelbild / Hero image" />
   </section>
 
   <main class="content">
-    <p>Die Station P4.1 ist auf die Versorgung von Patientinnen und Patienten mit gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</p>
+    <!-- DE text -->
+    <div class="lang lang-de active">
+      <p>Die Station P4.1 ist auf die Versorgung von Patientinnen und Patienten mit gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</p>
+      <p>Ein besonderer Schwerpunkt liegt in der Betreuung von Menschen mit gastrointestinalen Tumorerkrankungen. Diese werden im Rahmen des Viszeralonkologischen Zentrums (VOZ) am Cancer Center Braunschweig (CCB) umfassend und interdisziplinär begleitet. Die individuell abgestimmten Therapiekonzepte umfassen unter anderem operative Eingriffe, systemische Behandlungen, palliative Versorgung, eine gezielte ernährungsmedizinische Unterstützung sowie ein professionelles Schmerz- und Symptommanagement.</p>
+      <p>Ein weiterer zentraler Versorgungsbereich ist die Diabetologie – insbesondere die Behandlung von Diabetes mellitus Typ&nbsp;1 und Typ&nbsp;2 sowie deren Folgeerkrankungen wie das diabetische Fußsyndrom, Polyneuropathien und chronische Wunden. Unser Pflegeteam ist speziell geschult im Einsatz moderner Verfahren des Wundmanagements, darunter auch die Vakuumtherapie und die Madentherapie.</p>
+    </div>
 
-    <p>Ein besonderer Schwerpunkt liegt in der Betreuung von Menschen mit gastrointestinalen Tumorerkrankungen. Diese werden im Rahmen des Viszeralonkologischen Zentrums (VOZ) am Cancer Center Braunschweig (CCB) umfassend und interdisziplinär begleitet. Die individuell abgestimmten Therapiekonzepte umfassen unter anderem operative Eingriffe, systemische Behandlungen, palliative Versorgung, eine gezielte ernährungsmedizinische Unterstützung sowie ein professionelles Schmerz- und Symptommanagement.</p>
-
-    <p>Ein weiterer zentraler Versorgungsbereich ist die Diabetologie – insbesondere die Behandlung von Diabetes mellitus Typ&nbsp;1 und Typ&nbsp;2 sowie deren Folgeerkrankungen wie das diabetische Fußsyndrom, Polyneuropathien und chronische Wunden. Unser Pflegeteam ist speziell geschult im Einsatz moderner Verfahren des Wundmanagements, darunter auch die Vakuumtherapie und die Madentherapie.</p>
+    <!-- EN text -->
+    <div class="lang lang-en">
+      <p>Ward P4.1 specializes in the care of patients with gastroenterological conditions and complex metabolic disorders within the field of diabetology.</p>
+      <p>A particular emphasis is placed on the management of patients with gastrointestinal tumors. These patients receive comprehensive, interdisciplinary care as part of the Visceral Oncology Center (VOZ) at the Cancer Center Braunschweig (CCB). Individually tailored therapeutic concepts include surgical interventions, systemic therapies, palliative care, targeted nutritional medicine, as well as professional pain and symptom management.</p>
+      <p>Another key area of care is diabetology – in particular, the treatment of type 1 and type 2 diabetes mellitus and their complications, such as diabetic foot syndrome, polyneuropathies, and chronic wounds. Our nursing team is specially trained in the application of modern wound management techniques, including vacuum therapy and maggot therapy.</p>
+    </div>
 
     <div class="logo-wrap">
       <img class="logo" src="Logo.jpg" alt="Logo" />
     </div>
   </main>
 
-  <section class="contact" aria-label="Kontakt">
-    <h2>Kontakt</h2>
+  <section class="contact" aria-label="Kontakt / Contact">
+    <h2 class="lang lang-de active">Kontakt</h2>
+    <h2 class="lang lang-en">Contact</h2>
     <address>
-      <div><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
-      <div>Adresse: <span id="addr">&lt;Fichtengrund, 1, 38126 Braunschweig&gt;</span></div>
-      <div>E-Mail: <a id="mail" href="mailto:kontakt@example.org">kontakt@example.org</a></div>
+      <div class="lang lang-de active"><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
+      <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</strong></div>
+
+      <div class="lang lang-de active">Adresse: <span id="addr">&lt;Fichtengrund 1, 38126 Braunschweig;</span></div>
+      <div class="lang lang-en">Address: <span>&lt;Fichtengrund 1, 38126 Braunschweig&gt;</span></div>
+
+      <div>E‑Mail / Email: <a id="mail" href="mailto:kontakt@example.org">kontakt@example.org</a></div>
       <div>Web: <a id="web" href="https://example.org" target="_blank" rel="noopener">https://example.org</a></div>
-      <div>Telefon: <a id="tel" href="tel:+49531234567">+49&nbsp;531&nbsp;123&nbsp;4567</a></div>
+      <div class="lang lang-de active">Telefon: <a id="tel" href="tel:+49531234567">+49&nbsp;531&nbsp;123&nbsp;4567</a></div>
+      <div class="lang lang-en">Phone: <a href="tel:+49531234567">+49&nbsp;531&nbsp;123&nbsp;4567</a></div>
     </address>
   </section>
 
   <footer>
-    <p>© <span id="year"></span> Station P4.1 – CCB Braunschweig. Alle Rechte vorbehalten.</p>
+    <p class="lang lang-de active">© <span id="year"></span> Station P4.1 – CCB Braunschweig. Alle Rechte vorbehalten.</p>
+    <p class="lang lang-en">© <span id="year2"></span> Ward P4.1 – CCB Braunschweig. All rights reserved.</p>
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Footer years
+    const y = new Date().getFullYear();
+    document.getElementById('year').textContent = y;
+    document.getElementById('year2').textContent = y;
+
+    // Language toggle
+    let current = 'de';
+    const btn = document.getElementById('langToggle');
+    function setLang(lang){
+      current = lang;
+      document.querySelectorAll('.lang').forEach(el=>{
+        el.classList.toggle('active', el.classList.contains('lang-' + lang));
+      });
+      // Button label shows the other language as a hint
+      btn.textContent = (lang === 'de') ? 'EN' : 'DE';
+      // Update html lang attribute for accessibility
+      document.documentElement.setAttribute('lang', lang === 'de' ? 'de' : 'en');
+    }
+    btn.addEventListener('click', ()=> setLang(current === 'de' ? 'en' : 'de'));
   </script>
 </body>
 </html>
