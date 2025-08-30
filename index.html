@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Station P4.1 – Gastroenterologie & Diabetologie</title>
+  <meta name="description" content="Station P4.1 – Versorgung von Patientinnen und Patienten mit gastroenterologischen Erkrankungen und Diabetologie am CCB Braunschweig." />
+  <style>
+    :root{
+      --bg:#ffffff;
+      --fg:#0f172a; /* slate-900 */
+      --muted:#475569; /* slate-600 */
+      --accent:#0ea5e9; /* sky-500 */
+      --maxw: 920px;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#0b1020; --fg:#e5e7eb; --muted:#9ca3af; --accent:#38bdf8; }
+    }
+    html,body{height:100%;}
+    body{
+      margin:0; background:var(--bg); color:var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.6;
+    }
+    .header{
+      max-width:var(--maxw); margin:32px auto 16px; padding:0 20px;
+    }
+    h1{
+      margin:0 0 12px; font-size:clamp(28px,4vw,40px); line-height:1.2;
+      letter-spacing:0.2px;
+    }
+    .lead{
+      color:var(--muted); font-size:clamp(16px,1.4vw,18px);
+    }
+    .hero{
+      margin: 16px 0 32px;
+    }
+    .hero img{
+      display:block; width:100%; height:56.25vw; max-height:70vh; object-fit:cover;
+      background:#000;
+    }
+
+    .content{ max-width:var(--maxw); margin:0 auto; padding:0 20px 40px; }
+    .content p{ margin:0 0 16px; font-size:clamp(16px,1.4vw,19px); }
+
+    .logo-wrap{ display:grid; place-items:center; margin:32px 0; }
+    .logo{
+      max-width:min(260px, 50vw); height:auto; display:block; filter: drop-shadow(0 4px 16px rgba(0,0,0,.08));
+    }
+
+    .contact{
+      max-width:var(--maxw); margin:8px auto 64px; padding:0 20px;
+      border-top:1px solid color-mix(in oklab, var(--muted) 24%, transparent);
+    }
+    .contact h2{ font-size:clamp(20px,2.6vw,26px); margin:18px 0 8px; }
+    address{ font-style:normal; color:var(--muted); }
+    .contact a{ color:var(--accent); text-decoration:none; }
+    .contact a:hover{ text-decoration:underline; }
+
+    footer{
+      max-width:var(--maxw); margin:0 auto 40px; padding:0 20px; color:var(--muted);
+      font-size:14px;
+    }
+
+    @media print{
+      .hero img{ height:auto; max-height:none; }
+      .logo{ max-width:200px; }
+      .contact, footer{ border-top:0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Station P4.1 – Gastroenterologie &amp; Diabetologie</h1>
+    <p class="lead">Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</p>
+  </header>
+
+  <section class="hero" aria-label="Titelbild">
+    <img src="Foto1.jpg" alt="Station P4.1 – Titelbild" />
+  </section>
+
+  <main class="content">
+    <p>Die Station P4.1 ist auf die Versorgung von Patientinnen und Patienten mit gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</p>
+
+    <p>Ein besonderer Schwerpunkt liegt in der Betreuung von Menschen mit gastrointestinalen Tumorerkrankungen. Diese werden im Rahmen des Viszeralonkologischen Zentrums (VOZ) am Cancer Center Braunschweig (CCB) umfassend und interdisziplinär begleitet. Die individuell abgestimmten Therapiekonzepte umfassen unter anderem operative Eingriffe, systemische Behandlungen, palliative Versorgung, eine gezielte ernährungsmedizinische Unterstützung sowie ein professionelles Schmerz- und Symptommanagement.</p>
+
+    <p>Ein weiterer zentraler Versorgungsbereich ist die Diabetologie – insbesondere die Behandlung von Diabetes mellitus Typ&nbsp;1 und Typ&nbsp;2 sowie deren Folgeerkrankungen wie das diabetische Fußsyndrom, Polyneuropathien und chronische Wunden. Unser Pflegeteam ist speziell geschult im Einsatz moderner Verfahren des Wundmanagements, darunter auch die Vakuumtherapie und die Madentherapie.</p>
+
+    <div class="logo-wrap">
+      <img class="logo" src="Logo.jpg" alt="Logo" />
+    </div>
+  </main>
+
+  <section class="contact" aria-label="Kontakt">
+    <h2>Kontakt</h2>
+    <address>
+      <div><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
+      <div>Adresse: <span id="addr">&lt;Straße, Hausnummer, PLZ Ort&gt;</span></div>
+      <div>E‑Mail: <a id="mail" href="mailto:kontakt@example.org">kontakt@example.org</a></div>
+      <div>Web: <a id="web" href="https://example.org" target="_blank" rel="noopener">https://example.org</a></div>
+      <div>Telefon: <a id="tel" href="tel:+49531234567">+49&nbsp;531&nbsp;123&nbsp;4567</a></div>
+    </address>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Station P4.1 – CCB Braunschweig. Alle Rechte vorbehalten.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
