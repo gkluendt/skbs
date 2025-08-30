@@ -5,71 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Station P4.1 – Gastroenterologie & Diabetologie</title>
   <style>
-    body{margin:0;font-family:sans-serif;line-height:1.6;background:#fff;color:#111;}
-    .lang-btn{position:fixed;top:14px;right:14px;z-index:10;padding:8px 12px;border-radius:999px;font-weight:600;cursor:pointer;}
-    .header{max-width:920px;margin:32px auto 16px;padding:0 20px;}
-    h1{margin:0 0 12px;font-size:clamp(28px,4vw,40px);} 
-    .lead{font-size:18px;}
-    .lead strong{font-weight:700;}
-    .speaker{
-      width:44px; height:44px; margin-left:12px; vertical-align:middle; cursor:pointer;
-      opacity:.95; transition:transform .1s ease;
-      display:inline-block; background-size:cover; background-position:center;
-      border-radius:999px; border:1px solid #cbd5e1; background-color: rgba(15,23,42,.08);
+    :root{
+      --fg:#0f172a;
+      --muted:#475569;
+      --border:#cbd5e1;
+      --chip-bg: rgba(15,23,42,.08);
+      --maxw:920px;
     }
-    .hero img{display:block;width:100%;height:auto;}
-    .content{max-width:920px;margin:0 auto;padding:0 20px 40px;}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;background:#fff;color:#111;}
+    .lang-btn{
+      position:fixed;top:14px;right:14px;z-index:10;padding:8px 12px;border-radius:999px;
+      font-weight:600;cursor:pointer;border:1px solid var(--border);background:#fff;color:#111;
+    }
+    .lang-btn:hover{background:#f8fafc}
+    .header{max-width:var(--maxw);margin:32px auto 16px;padding:0 20px;}
+    h1{margin:0 0 12px;font-size:clamp(28px,4vw,40px);}
+    .lead{font-size:18px;color:var(--muted);}
+    .lead strong{font-weight:700;color:#111;}
+    /* Видимая, контрастная кнопка-спикер */
+    .speaker{
+      width:44px;height:44px;margin-left:12px;vertical-align:middle;cursor:pointer;
+      display:inline-block;object-fit:contain;transition:transform .08s ease, filter .15s ease;
+      border-radius:999px;border:1px solid var(--border);background-color:var(--chip-bg);
+    }
+    .speaker:hover{transform:scale(1.03);filter:contrast(1.1);}
+    .hero img{display:block;width:100%;height:auto;background:#000;}
+    .content{max-width:var(--maxw);margin:0 auto;padding:0 20px 40px;}
+    .content p{margin:0 0 16px;font-size:clamp(16px,1.4vw,19px);}
     .logo-wrap{display:grid;place-items:center;margin:32px 0;}
-    .logo{max-width:260px;height:auto;}
-    .contact{max-width:920px;margin:8px auto 64px;padding:0 20px;border-top:1px solid #ccc;}
+    .logo{max-width:260px;height:auto}
+    .contact{max-width:var(--maxw);margin:8px auto 64px;padding:0 20px;border-top:1px solid #e5e7eb;}
     .contact h2{font-size:24px;margin:18px 0 8px;}
-    address{font-style:normal;}
-    footer{max-width:920px;margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
+    address{font-style:normal}
+    footer{max-width:var(--maxw);margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
     .lang{display:none;}
     .lang.active{display:block;}
   </style>
 </head>
 <body>
-  <button id="langToggle" class="lang-btn">EN</button>
+  <button id="langToggle" class="lang-btn" aria-label="Sprache wechseln">EN</button>
 
   <header class="header">
     <h1 class="lang lang-de active">Station P4.1 – Gastroenterologie &amp; Diabetologie</h1>
     <h1 class="lang lang-en">Ward P4.1 – Gastroenterology and Diabetology</h1>
 
-    <p class="lead lang lang-de active"><strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong> <img id="speakerBtn" class="speaker" src="Speaker0.jpg" alt="Vorlesen"></p>
-    <p class="lead lang lang-en"><strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong> <img id="speakerBtnClone" class="speaker" src="Speaker0.jpg" alt="Read aloud"></p>
+    <p class="lead lang lang-de active">
+      <strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong>
+      <img id="speakerBtn" class="speaker" src="Speaker0.png" alt="Vorlesen" title="Vorlesen">
+    </p>
+    <p class="lead lang lang-en">
+      <strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong>
+      <img id="speakerBtnClone" class="speaker" src="Speaker0.png" alt="Read aloud" title="Read aloud">
+    </p>
   </header>
 
-  <section class="hero">
+  <section class="hero" aria-label="Titelbild">
     <img src="Foto1.jpg" alt="Titelbild" />
   </section>
 
   <main class="content">
+    <!-- DE -->
     <div class="lang lang-de active">
       <p>Die Station P4.1 ist auf die Versorgung von Patientinnen und Patienten mit gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</p>
       <p>Ein besonderer Schwerpunkt liegt in der Betreuung von Menschen mit gastrointestinalen Tumorerkrankungen. Diese werden im Rahmen des Viszeralonkologischen Zentrums (VOZ) am Cancer Center Braunschweig (CCB) umfassend und interdisziplinär begleitet. Die individuell abgestimmten Therapiekonzepte umfassen unter anderem operative Eingriffe, systemische Behandlungen, palliative Versorgung, eine gezielte ernährungsmedizinische Unterstützung sowie ein professionelles Schmerz- und Symptommanagement.</p>
       <p>Ein weiterer zentraler Versorgungsbereich ist die Diabetologie – insbesondere die Behandlung von Diabetes mellitus Typ&nbsp;1 und Typ&nbsp;2 sowie deren Folgeerkrankungen wie das diabetische Fußsyndrom, Polyneuropathien und chronische Wunden. Unser Pflegeteam ist speziell geschult im Einsatz moderner Verfahren des Wundmanagements, darunter auch die Vakuumtherapie und die Madentherapie.</p>
     </div>
+
+    <!-- EN -->
     <div class="lang lang-en">
       <p>Ward P4.1 specializes in the care of patients with gastroenterological conditions and complex metabolic disorders within the field of diabetology.</p>
       <p>A particular emphasis is placed on the management of patients with gastrointestinal tumors. These patients receive comprehensive, interdisciplinary care as part of the Visceral Oncology Center (VOZ) at the Cancer Center Braunschweig (CCB). Individually tailored therapeutic concepts include surgical interventions, systemic therapies, palliative care, targeted nutritional medicine, as well as professional pain and symptom management.</p>
       <p>Another key area of care is diabetology – in particular, the treatment of type 1 and type 2 diabetes mellitus and their complications, such as diabetic foot syndrome, polyneuropathies, and chronic wounds. Our nursing team is specially trained in the application of modern wound management techniques, including vacuum therapy and maggot therapy.</p>
     </div>
+
     <div class="logo-wrap">
       <img class="logo" src="Logo.jpg" alt="Logo" />
     </div>
   </main>
 
-  <section class="contact">
+  <section class="contact" aria-label="Kontakt / Contact">
     <h2 class="lang lang-de active">Kontakt</h2>
     <h2 class="lang lang-en">Contact</h2>
     <address>
       <div class="lang lang-de active"><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
       <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</strong></div>
+
       <div class="lang lang-de active">Adresse: &lt;Fichtengrund 1, 38126 Braunschweig&gt;</div>
       <div class="lang lang-en">Address: &lt;Fichtengrund 1, 38126 Braunschweig&gt;</div>
-      <div>E‑Mail / Email: <a href="mailto:kontakt@example.org">kontakt@example.org</a></div>
-      <div>Web: <a href="https://example.org" target="_blank">https://example.org</a></div>
+
+      <div>E-Mail / Email: <a href="mailto:kontakt@example.org">kontakt@example.org</a></div>
+      <div>Web: <a href="https://example.org" target="_blank" rel="noopener">https://example.org</a></div>
       <div class="lang lang-de active">Telefon: +49 531 123 4567</div>
       <div class="lang lang-en">Phone: +49 531 123 4567</div>
     </address>
@@ -80,42 +105,59 @@
     <p class="lang lang-en">© <span id="year2"></span> Ward P4.1 – CCB Braunschweig. All rights reserved.</p>
   </footer>
 
+  <!-- Audio -->
   <audio id="audDE" src="SoundDE.mp3" preload="auto"></audio>
   <audio id="audEN" src="SoundEN.mp3" preload="auto"></audio>
 
   <script>
+    // Годы в подвале
     const y=new Date().getFullYear();
     document.getElementById('year').textContent=y;
     document.getElementById('year2').textContent=y;
 
+    // Переключение языка
     let current='de';
     const btn=document.getElementById('langToggle');
     function setLang(lang){
       current=lang;
       document.querySelectorAll('.lang').forEach(el=>{
-        el.classList.toggle('active',el.classList.contains('lang-'+lang));
+        el.classList.toggle('active', el.classList.contains('lang-'+lang));
       });
       btn.textContent=(lang==='de')?'EN':'DE';
+      stopAll(); // останавливаем озвучку при смене языка
+      setIdle();
+      document.documentElement.setAttribute('lang', lang);
     }
     btn.addEventListener('click',()=>setLang(current==='de'?'en':'de'));
 
+    // Озвучка
     const imgDE=document.getElementById('speakerBtn');
     const imgEN=document.getElementById('speakerBtnClone');
     const audDE=document.getElementById('audDE');
     const audEN=document.getElementById('audEN');
 
-    function stopAll(){[audDE,audEN].forEach(a=>{a.pause();a.currentTime=0;});}
-    function setIdle(){imgDE.src='Speaker0.jpg';imgEN.src='Speaker0.jpg';}
-    function setActive(){imgDE.src='Speaker.jpg';imgEN.src='Speaker.jpg';}
+    function stopAll(){ [audDE,audEN].forEach(a=>{ try{ a.pause(); a.currentTime=0; }catch(e){} }); }
+    function setIdle(){ imgDE.src='Speaker0.png'; imgEN.src='Speaker0.png'; }
+    function setActive(){ imgDE.src='Speaker.png'; imgEN.src='Speaker.png'; }
 
     function handleSpeak(){
-      const audio=current==='de'?audDE:audEN;
-      if(!audio.paused&&audio.currentTime>0&&!audio.ended){stopAll();setIdle();return;}
-      stopAll();setActive();audio.currentTime=0;audio.play().catch(()=>{});
-      audio.onended=()=>setIdle();
+      const audio = (current==='de') ? audDE : audEN;
+
+      // если уже играет — остановить и вернуть икону
+      if(!audio.paused && audio.currentTime>0 && !audio.ended){
+        stopAll(); setIdle(); return;
+      }
+
+      stopAll(); setActive(); audio.currentTime=0;
+      const p = audio.play();
+      if(p && typeof p.catch==='function'){ p.catch(()=>{}); }
+
+      const onEnd=()=>{ setIdle(); audio.removeEventListener('ended',onEnd); };
+      audio.addEventListener('ended',onEnd);
     }
     imgDE.addEventListener('click',handleSpeak);
     imgEN.addEventListener('click',handleSpeak);
   </script>
 </body>
 </html>
+
