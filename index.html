@@ -7,9 +7,9 @@
   <style>
     body{margin:0;font-family:sans-serif;line-height:1.6;background:#fff;color:#111;}
     .lang-btn{position:fixed;top:14px;right:14px;z-index:10;padding:8px 12px;border-radius:999px;font-weight:600;cursor:pointer;border:1px solid #ccc;background:#fff;}
-    .header{max-width:920px;margin:32px auto 16px;padding:0 20px;}
-    h1{margin:0 0 12px;font-size:clamp(28px,4vw,40px);} 
-    .lead{font-size:18px;}
+    .header{max-width:920px;margin:32px auto 12px;padding:0 20px;}
+    h1{margin:0 0 10px;font-size:clamp(28px,4vw,40px);} 
+    .lead{font-size:18px;margin:0 0 12px;}
     .lead strong{font-weight:700;}
     .hero img{display:block;width:100%;height:auto;}
     .content{max-width:920px;margin:0 auto;padding:0 20px 40px;}
@@ -29,14 +29,23 @@
   <button id="langToggle" class="lang-btn">EN</button>
 
   <header class="header">
-    <h1 class="lang lang-de active">Station P4.1 – Gastroenterologie &amp; Diabetologie <button id="speakDE" class="speak-btn">Anhören</button></h1>
-    <h1 class="lang lang-en">Ward P4.1 – Gastroenterology and Diabetology <button id="speakEN" class="speak-btn">Listen</button></h1>
+    <!-- Заголовок ТОЛЬКО "Station P4.1" + кнопка прослушивания -->
+    <h1 class="lang lang-de active">Station P4.1 <button id="speakDE" class="speak-btn" aria-label="Text anhören">Anhören</button></h1>
+    <h1 class="lang lang-en">Station P4.1 <button id="speakEN" class="speak-btn" aria-label="Listen to the text">Listen</button></h1>
+
+    <!-- Жирная вводная строка сразу под заголовком -->
+    <p class="lead lang lang-de active"><strong>Die Station P4.1 ist auf die Versorgung von gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</strong></p>
+    <p class="lead lang lang-en"><strong>Ward P4.1 specializes in the care of gastroenterological diseases and complex metabolic disorders within the framework of diabetology.</strong></p>
   </header>
 
-  <main class="content">
-    <div class="lang lang-de active">
-      <p><strong>Die Station P4.1 ist auf die Versorgung von gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</strong></p>
+  <!-- Фото сразу после заголовка/лида -->
+  <section class="hero" aria-label="Titelbild">
+    <img src="Foto1.jpg" alt="Titelbild" />
+  </section>
 
+  <main class="content">
+    <!-- DE -->
+    <div class="lang lang-de active">
       <h2>Versorgungsschwerpunkt Gastroenterologie</h2>
       <ul>
         <li>Die Gastroenterologie umfasst die Behandlung von Erkrankungen des Magen-Darm-Trakts, der Leber, der Gallenwege und der Bauchspeicheldrüse, wozu akute und chronische Entzündungen, Geschwüre, chronisch-entzündliche Darmerkrankungen wie Morbus Crohn und Colitis ulcerosa sowie Tumorerkrankungen gehören.</li>
@@ -55,9 +64,8 @@
       <p><strong>Betten: 32</strong></p>
     </div>
 
+    <!-- EN -->
     <div class="lang lang-en">
-      <p><strong>Ward P4.1 specializes in the care of gastroenterological diseases and complex metabolic disorders within the framework of diabetology.</strong></p>
-
       <h2>Clinical Focus: Gastroenterology</h2>
       <ul>
         <li>Gastroenterology covers the treatment of diseases of the gastrointestinal tract, liver, biliary tract, and pancreas, including acute and chronic inflammations, ulcers, chronic inflammatory bowel diseases such as Crohn’s disease and ulcerative colitis, as well as tumor diseases.</li>
@@ -76,8 +84,9 @@
       <p><strong>Beds: 32</strong></p>
     </div>
 
+    <!-- Логотип по центру -->
     <div class="logo-wrap">
-      <img class="logo" src="Foto1.jpg" alt="Logo" />
+      <img class="logo" src="Logo.jpg" alt="Logo" />
     </div>
   </main>
 
@@ -117,6 +126,8 @@
         el.classList.toggle('active',el.classList.contains('lang-'+lang));
       });
       btn.textContent=(lang==='de')?'EN':'DE';
+      stopAll();
+      setSpeakLabels(false);
     }
     btn.addEventListener('click',()=>setLang(current==='de'?'en':'de'));
 
@@ -125,17 +136,23 @@
     const speakDE=document.getElementById('speakDE');
     const speakEN=document.getElementById('speakEN');
 
-    function stopAll(){[audDE,audEN].forEach(a=>{a.pause();a.currentTime=0;});}
-
-    function playAudio(lang){
-      stopAll();
-      const audio=(lang==='de')?audDE:audEN;
-      audio.currentTime=0;
-      audio.play().catch(()=>{});
+    function stopAll(){[audDE,audEN].forEach(a=>{try{a.pause();a.currentTime=0;}catch(e){}});}
+    function isPlaying(a){return !a.paused && a.currentTime>0 && !a.ended;}
+    function setSpeakLabels(playing){
+      speakDE.textContent = playing ? 'Stopp' : 'Anhören';
+      speakEN.textContent = playing ? 'Stop'  : 'Listen';
     }
 
-    speakDE.addEventListener('click',()=>playAudio('de'));
-    speakEN.addEventListener('click',()=>playAudio('en'));
+    function handleSpeak(lang){
+      const audio = (lang==='de')?audDE:audEN;
+      if(isPlaying(audio)){ stopAll(); setSpeakLabels(false); return; }
+      stopAll(); setSpeakLabels(true); audio.currentTime=0;
+      const p=audio.play(); if(p && p.catch) p.catch(()=>{});
+      audio.onended=()=> setSpeakLabels(false);
+    }
+
+    speakDE.addEventListener('click',()=>handleSpeak('de'));
+    speakEN.addEventListener('click',()=>handleSpeak('en'));
   </script>
 </body>
 </html>
