@@ -5,110 +5,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Station P4.1 – Gastroenterologie & Diabetologie</title>
   <style>
-    :root{
-      --border:#cbd5e1;
-      --bg:#ffffff;
-      --fg:#111111;
-      --muted:#475569;
-      --maxw:920px;
-      --hover:#f8fafc;
-    }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;background:var(--bg);color:var(--fg);}
-    /* универсальный стиль «пилюля» */
-    .chip{
-      display:inline-flex; align-items:center; gap:.4rem;
-      padding:.5rem .75rem; border-radius:999px;
-      border:1px solid var(--border); background:transparent; color:var(--fg);
-      font-weight:600; cursor:pointer; user-select:none;
-      line-height:1; -webkit-tap-highlight-color: transparent;
-    }
-    .chip:hover{ background:var(--hover); }
-    .chip:focus-visible{ outline:2px solid #94a3b8; outline-offset:2px; }
-
-    .lang-btn{ position:fixed; top:14px; right:14px; z-index:10; }
-
-    .header{max-width:var(--maxw);margin:32px auto 16px;padding:0 20px;}
-    h1{margin:0 0 12px;font-size:clamp(28px,4vw,40px);}
-    .lead{font-size:18px;color:var(--muted);margin:0;}
-    .lead strong{font-weight:700;color:var(--fg);}
-    .lead .play-wrap{ display:inline-flex; align-items:center; margin-left:.5rem; }
-
-    .hero img{display:block;width:100%;height:auto;background:#000;}
-    .content{max-width:var(--maxw);margin:0 auto;padding:0 20px 40px;}
-    .content p{margin:0 0 16px;font-size:clamp(16px,1.4vw,19px);}
+    body{margin:0;font-family:sans-serif;line-height:1.6;background:#fff;color:#111;}
+    .lang-btn{position:fixed;top:14px;right:14px;z-index:10;padding:8px 12px;border-radius:999px;font-weight:600;cursor:pointer;border:1px solid #ccc;background:#fff;}
+    .header{max-width:920px;margin:32px auto 16px;padding:0 20px;}
+    h1{margin:0 0 12px;font-size:clamp(28px,4vw,40px);} 
+    .lead{font-size:18px;}
+    .lead strong{font-weight:700;}
+    .hero img{display:block;width:100%;height:auto;}
+    .content{max-width:920px;margin:0 auto;padding:0 20px 40px;}
     .logo-wrap{display:grid;place-items:center;margin:32px 0;}
     .logo{max-width:260px;height:auto;}
-    .contact{max-width:var(--maxw);margin:8px auto 64px;padding:0 20px;border-top:1px solid var(--border);}
+    .contact{max-width:920px;margin:8px auto 64px;padding:0 20px;border-top:1px solid #ccc;}
     .contact h2{font-size:24px;margin:18px 0 8px;}
-    address{font-style:normal}
-    footer{max-width:var(--maxw);margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
-
+    address{font-style:normal;}
+    footer{max-width:920px;margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
     .lang{display:none;}
     .lang.active{display:block;}
+    .speak-btn{margin-left:12px;padding:6px 12px;border-radius:999px;border:1px solid #ccc;background:rgba(15,23,42,.08);cursor:pointer;font-size:14px;}
+    ul{margin:0 0 16px 20px;}
   </style>
 </head>
 <body>
-  <!-- переключатель языка -->
-  <button id="langToggle" class="chip lang-btn" aria-label="Sprache wechseln">EN</button>
+  <button id="langToggle" class="lang-btn">EN</button>
 
   <header class="header">
-    <h1 class="lang lang-de active">Station P4.1 – Gastroenterologie &amp; Diabetologie</h1>
-    <h1 class="lang lang-en">Ward P4.1 – Gastroenterology and Diabetology</h1>
-
-    <!-- lead + кнопка прослушивания -->
-    <p class="lead lang lang-de active">
-      <strong>Versorgungsschwerpunkte: gastroenterologische Erkrankungen, komplexe Stoffwechselstörungen sowie Diabetologie am Cancer Center Braunschweig (CCB).</strong>
-      <span class="play-wrap">
-        <button id="playDE" class="chip" aria-label="Text anhören">Anhören</button>
-      </span>
-    </p>
-
-    <p class="lead lang lang-en">
-      <strong>Clinical Focus: Gastroenterological disorders, complex metabolic diseases, and diabetology at the Cancer Center Braunschweig (CCB).</strong>
-      <span class="play-wrap">
-        <button id="playEN" class="chip" aria-label="Listen to the text">Listen</button>
-      </span>
-    </p>
+    <h1 class="lang lang-de active">Station P4.1 – Gastroenterologie &amp; Diabetologie <button id="speakDE" class="speak-btn">Anhören</button></h1>
+    <h1 class="lang lang-en">Ward P4.1 – Gastroenterology and Diabetology <button id="speakEN" class="speak-btn">Listen</button></h1>
   </header>
 
-  <section class="hero" aria-label="Titelbild">
-    <img src="Foto1.jpg" alt="Titelbild" />
-  </section>
-
   <main class="content">
-    <!-- DE -->
     <div class="lang lang-de active">
-      <p>Die Station P4.1 ist auf die Versorgung von Patientinnen und Patienten mit gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</p>
-      <p>Ein besonderer Schwerpunkt liegt in der Betreuung von Menschen mit gastrointestinalen Tumorerkrankungen. Diese werden im Rahmen des Viszeralonkologischen Zentrums (VOZ) am Cancer Center Braunschweig (CCB) umfassend und interdisziplinär begleitet. Die individuell abgestimmten Therapiekonzepte umfassen unter anderem operative Eingriffe, systemische Behandlungen, palliative Versorgung, eine gezielte ernährungsmedizinische Unterstützung sowie ein professionelles Schmerz- und Symptommanagement.</p>
-      <p>Ein weiterer zentraler Versorgungsbereich ist die Diabetologie – insbesondere die Behandlung von Diabetes mellitus Typ&nbsp;1 und Typ&nbsp;2 sowie deren Folgeerkrankungen wie das diabetische Fußsyndrom, Polyneuropathien und chronische Wunden. Unser Pflegeteam ist speziell geschult im Einsatz moderner Verfahren des Wundmanagements, darunter auch die Vakuumtherapie und die Madentherapie.</p>
+      <p><strong>Die Station P4.1 ist auf die Versorgung von gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</strong></p>
+
+      <h2>Versorgungsschwerpunkt Gastroenterologie</h2>
+      <ul>
+        <li>Die Gastroenterologie umfasst die Behandlung von Erkrankungen des Magen-Darm-Trakts, der Leber, der Gallenwege und der Bauchspeicheldrüse, wozu akute und chronische Entzündungen, Geschwüre, chronisch-entzündliche Darmerkrankungen wie Morbus Crohn und Colitis ulcerosa sowie Tumorerkrankungen gehören.</li>
+        <li>Ein besonderer Schwerpunkt liegt in der endoskopischen Diagnostik und Therapie, die unter anderem Gastroskopien, Koloskopien und Endosonographien beinhaltet.</li>
+      </ul>
+
+      <h2>Versorgungsschwerpunkt Diabetologie &amp; Endokrinologie</h2>
+      <ul>
+        <li>Auf unserer Station werden Patienten mit Erstdiagnose eines Diabetes, mit akuten Stoffwechselentgleisungen wie Hyper- oder Hypoglykämien sowie mit Folgeerkrankungen des Diabetes, insbesondere dem diabetischen Fußsyndrom, behandelt.</li>
+        <li>Das Behandlungsteam besteht aus diabetologischen Ärzten, Diabetesberaterinnen und erfahrenen Pflege(fach)kräften, die gemeinsam eine umfassende Betreuung sicherstellen und ihr Fachwissen in Diabetologie und Endokrinologie einbringen.</li>
+        <li>Ein besonderer Schwerpunkt liegt in der Versorgung des diabetischen Fußsyndroms, wobei moderne Verfahren des Wundmanagements wie Vakuumtherapie und Madentherapie eingesetzt werden.</li>
+        <li>Bei schwerwiegenden Komplikationen, wie notwendigen Amputationen, erfolgt eine enge Zusammenarbeit mit der chirurgischen Abteilung.</li>
+        <li>In enger Kooperation mit der Nuklearmedizin übernehmen wir zudem die Diagnostik hormoneller Störungen der Hypophyse, Schilddrüse und Nebennieren und leiten im stationären Rahmen komplexe endokrinologische Therapien ein.</li>
+      </ul>
+
+      <p><strong>Betten: 32</strong></p>
     </div>
 
-    <!-- EN -->
     <div class="lang lang-en">
-      <p>Ward P4.1 specializes in the care of patients with gastroenterological conditions and complex metabolic disorders within the field of diabetology.</p>
-      <p>A particular emphasis is placed on the management of patients with gastrointestinal tumors. These patients receive comprehensive, interdisciplinary care as part of the Visceral Oncology Center (VOZ) at the Cancer Center Braunschweig (CCB). Individually tailored therapeutic concepts include surgical interventions, systemic therapies, palliative care, targeted nutritional medicine, as well as professional pain and symptom management.</p>
-      <p>Another key area of care is diabetology – in particular, the treatment of type 1 and type 2 diabetes mellitus and their complications, such as diabetic foot syndrome, polyneuropathies, and chronic wounds. Our nursing team is specially trained in the application of modern wound management techniques, including vacuum therapy and maggot therapy.</p>
+      <p><strong>Ward P4.1 specializes in the care of gastroenterological diseases and complex metabolic disorders within the framework of diabetology.</strong></p>
+
+      <h2>Clinical Focus: Gastroenterology</h2>
+      <ul>
+        <li>Gastroenterology covers the treatment of diseases of the gastrointestinal tract, liver, biliary tract, and pancreas, including acute and chronic inflammations, ulcers, chronic inflammatory bowel diseases such as Crohn’s disease and ulcerative colitis, as well as tumor diseases.</li>
+        <li>A particular focus is on endoscopic diagnostics and therapy, which includes gastroscopies, colonoscopies, and endosonographies.</li>
+      </ul>
+
+      <h2>Clinical Focus: Diabetology &amp; Endocrinology</h2>
+      <ul>
+        <li>On our ward, we treat patients with newly diagnosed diabetes, with acute metabolic derailments such as hyper- or hypoglycemia, as well as with secondary diseases of diabetes, particularly diabetic foot syndrome.</li>
+        <li>The treatment team consists of diabetologists, diabetes educators, and experienced nursing staff who ensure comprehensive care together and contribute their expertise in diabetology and endocrinology.</li>
+        <li>A particular focus is on the treatment of diabetic foot syndrome, where modern wound management methods such as vacuum therapy and maggot therapy are used.</li>
+        <li>In severe complications, such as necessary amputations, there is close cooperation with the surgical department.</li>
+        <li>In close cooperation with nuclear medicine, we also carry out diagnostics of hormonal disorders of the pituitary gland, thyroid, and adrenal glands and initiate complex endocrinological therapies in an inpatient setting.</li>
+      </ul>
+
+      <p><strong>Beds: 32</strong></p>
     </div>
 
     <div class="logo-wrap">
-      <img class="logo" src="Logo.jpg" alt="Logo" />
+      <img class="logo" src="Foto1.jpg" alt="Logo" />
     </div>
   </main>
 
-  <section class="contact" aria-label="Kontakt / Contact">
+  <section class="contact">
     <h2 class="lang lang-de active">Kontakt</h2>
     <h2 class="lang lang-en">Contact</h2>
     <address>
       <div class="lang lang-de active"><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
       <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</strong></div>
-
       <div class="lang lang-de active">Adresse: &lt;Fichtengrund 1, 38126 Braunschweig&gt;</div>
       <div class="lang lang-en">Address: &lt;Fichtengrund 1, 38126 Braunschweig&gt;</div>
-
-      <div>E-Mail / Email: <a href="mailto:A.Lange@skbs.de, g.kluendt@skbs.de">A.Lange@skbs.de, g.kluendt@skbs.de</a></div>
-      <div>Web: <a href="https://skbs.de" target="_blank" rel="noopener">https://skbs.de</a></div>
-      <div class="lang lang-de active">Telefon: +49 531 5952708</div>
-      <div class="lang lang-en">Phone: +49 531 5952708</div>
+      <div>E‑Mail / Email: <a href="mailto:kontakt@example.org">kontakt@example.org</a></div>
+      <div>Web: <a href="https://example.org" target="_blank">https://example.org</a></div>
+      <div class="lang lang-de active">Telefon: +49 531 123 4567</div>
+      <div class="lang lang-en">Phone: +49 531 123 4567</div>
     </address>
   </section>
 
@@ -117,69 +101,41 @@
     <p class="lang lang-en">© <span id="year2"></span> Ward P4.1 – CCB Braunschweig. All rights reserved.</p>
   </footer>
 
-  <!-- Audio файлы -->
   <audio id="audDE" src="SoundDE.mp3" preload="auto"></audio>
   <audio id="audEN" src="SoundEN.mp3" preload="auto"></audio>
 
   <script>
-    // Годы
     const y=new Date().getFullYear();
     document.getElementById('year').textContent=y;
     document.getElementById('year2').textContent=y;
 
-    // Переключение языка
     let current='de';
-    const langBtn=document.getElementById('langToggle');
+    const btn=document.getElementById('langToggle');
     function setLang(lang){
       current=lang;
       document.querySelectorAll('.lang').forEach(el=>{
-        el.classList.toggle('active', el.classList.contains('lang-'+lang));
+        el.classList.toggle('active',el.classList.contains('lang-'+lang));
       });
-      langBtn.textContent=(lang==='de')?'EN':'DE';
-      // сбрасываем аудио и подписи кнопок при смене языка
-      stopAll();
-      updatePlayLabels(false);
-      document.documentElement.setAttribute('lang', lang);
+      btn.textContent=(lang==='de')?'EN':'DE';
     }
-    langBtn.addEventListener('click',()=>setLang(current==='de'?'en':'de'));
+    btn.addEventListener('click',()=>setLang(current==='de'?'en':'de'));
 
-    // Проигрывание
-    const playDE=document.getElementById('playDE');
-    const playEN=document.getElementById('playEN');
     const audDE=document.getElementById('audDE');
     const audEN=document.getElementById('audEN');
+    const speakDE=document.getElementById('speakDE');
+    const speakEN=document.getElementById('speakEN');
 
-    function stopAll(){ [audDE,audEN].forEach(a=>{ try{ a.pause(); a.currentTime=0; }catch(e){} }); }
+    function stopAll(){[audDE,audEN].forEach(a=>{a.pause();a.currentTime=0;});}
 
-    function isPlaying(a){ return !a.paused && a.currentTime>0 && !a.ended; }
-
-    function updatePlayLabels(playing){
-      // показываем правильные подписи для обеих кнопок, даже если одна скрыта
-      playDE.textContent = playing ? 'Stop' : 'Anhören';
-      playEN.textContent = playing ? 'Stop'  : 'Listen';
-      playDE.setAttribute('aria-pressed', playing ? 'true':'false');
-      playEN.setAttribute('aria-pressed', playing ? 'true':'false');
-    }
-
-    function handlePlay(){
-      const audio = (current==='de') ? audDE : audEN;
-      const other = (current==='de') ? audEN : audDE;
-
-      // если уже играет — остановить
-      if(isPlaying(audio)){ stopAll(); updatePlayLabels(false); return; }
-
-      // старт
+    function playAudio(lang){
       stopAll();
+      const audio=(lang==='de')?audDE:audEN;
       audio.currentTime=0;
-      updatePlayLabels(true);
-      const p = audio.play();
-      if(p && typeof p.catch==='function') p.catch(()=>{ /* блокировка автоплея не должна срабатывать, есть жест */ });
-
-      audio.onended = ()=> updatePlayLabels(false);
+      audio.play().catch(()=>{});
     }
 
-    playDE.addEventListener('click', handlePlay);
-    playEN.addEventListener('click', handlePlay);
+    speakDE.addEventListener('click',()=>playAudio('de'));
+    speakEN.addEventListener('click',()=>playAudio('en'));
   </script>
 </body>
 </html>
