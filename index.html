@@ -6,7 +6,15 @@
   <title>Station P4.1 – Gastroenterologie & Diabetologie</title>
   <style>
     body{margin:0;font-family:sans-serif;line-height:1.6;background:#fff;color:#111;}
-    .lang-btn{position:fixed;top:14px;right:14px;z-index:10;padding:8px 12px;border-radius:999px;font-weight:600;cursor:pointer;border:1px solid #ccc;background:#fff;}
+
+    .lang-btn{
+      position:fixed;top:14px;right:14px;z-index:10;
+      padding:8px 12px;border-radius:999px;
+      font-weight:600;cursor:pointer;
+      border:1px solid #ccc;background:#fff;
+      color:#000; /* <-- добавили */
+    }
+
     .header{max-width:920px;margin:32px auto 12px;padding:0 20px;}
     h1{margin:0 0 10px;font-size:clamp(28px,4vw,40px);} 
     .lead{font-size:18px;margin:0 0 12px;}
@@ -21,9 +29,17 @@
     footer{max-width:920px;margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
     .lang{display:none;}
     .lang.active{display:block;}
-    .speak-btn{margin-left:12px;padding:6px 12px;border-radius:999px;border:1px solid #ccc;background:rgba(15,23,42,.08);cursor:pointer;font-size:14px;}
+
+    .speak-btn{
+      margin-left:12px;padding:6px 12px;border-radius:999px;
+      border:1px solid #ccc;background:rgba(15,23,42,.08);
+      cursor:pointer;font-size:14px;
+      color:#000; /* <-- добавили */
+    }
+
     ul{margin:0 0 16px 20px;}
-  </style>
+</style>
+
 </head>
 <body>
   <button id="langToggle" class="lang-btn">EN</button>
