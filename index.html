@@ -42,12 +42,16 @@
     .lang{display:none;}
     .lang.active{display:block;}
 
-    /* Speak buttons */
-    .speak-btn{
-      margin-left:12px;padding:6px 12px;border-radius:999px;
-      border:1px solid #ccc;background:rgba(15,23,42,.08);
-      cursor:pointer;font-size:14px;color:#000;
-    }
+    /* .speak-btn{
+  margin-left:12px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,0.3); /* полупрозрачная рамка */
+  background-color:transparent;     /* полностью прозрачный фон */
+  cursor:pointer;
+  font-size:14px;
+  color:#000;
+   }
     .speak-btn:focus-visible{outline:2px solid #000;outline-offset:2px;}
 
     /* Hero: centered carousel in 920px column */
@@ -55,31 +59,21 @@
     .hero-inner{
       position:relative;
       width:100%;
-      /* optional soft rounding */
       border-radius:6px;
       overflow:hidden;
-      /* let images define height; they are responsive */
     }
     .hero-inner img{
       display:block;
       width:100%;
       height:auto;
-      /* Stack slides */
       position:absolute;
       inset:0;
-      /* Fade setup */
       opacity:0;
-      transition:opacity 800ms ease-in-out;
-      /* prevent dragging ghost image on desktop */
+      transition:opacity 800ms ease-in-out; /* Всегда анимируем */
       user-select:none;
       -webkit-user-drag:none;
     }
     .hero-inner img.active{ opacity:1; position:relative; }
-
-    /* If user prefers reduced motion, disable transitions & autoplay */
-    @media (prefers-reduced-motion: reduce) {
-      .hero-inner img{ transition:none; }
-    }
 
     /* Centered logo */
     .logo-wrap{display:grid;place-items:center;margin:32px 0;}
@@ -115,29 +109,9 @@
   <!-- Карусель фото: строго по центру (колонка 920px) -->
   <section class="hero" aria-label="Titelbild">
     <div class="hero-inner" id="carousel">
-      <!-- Первый слайд активен сразу -->
-      <img
-        class="slide active"
-        src="Foto1.jpg"
-        alt="Titelbild der Station P4.1"
-        decoding="async"
-        fetchpriority="high"
-        loading="eager"
-      />
-      <img
-        class="slide"
-        src="Foto2.jpg"
-        alt="Zweites Foto – Station P4.1"
-        decoding="async"
-        loading="eager"
-      />
-      <img
-        class="slide"
-        src="Foto3.jpg"
-        alt="Drittes Foto – Station P4.1"
-        decoding="async"
-        loading="eager"
-      />
+      <img class="slide active" src="Foto1.jpg" alt="Titelbild der Station P4.1" decoding="async" fetchpriority="high" loading="eager" />
+      <img class="slide" src="Foto2.jpg" alt="Zweites Foto – Station P4.1" decoding="async" loading="eager" />
+      <img class="slide" src="Foto3.jpg" alt="Drittes Foto – Station P4.1" decoding="async" loading="eager" />
     </div>
   </section>
 
@@ -193,7 +167,7 @@
     <h2 class="lang lang-en">Contact</h2>
     <address>
       <div class="lang lang-de active"><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
-      <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</div>
+      <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</strong></div>
 
       <div class="lang lang-de active">Adresse: Fichtengrund 1, 38126 Braunschweig</div>
       <div class="lang lang-en">Address: Fichtengrund 1, 38126 Braunschweig</div>
@@ -215,7 +189,7 @@
   <audio id="aud" preload="metadata"></audio>
 
   <script>
-    // Год во всех местах
+    // Год
     document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
 
     // Языки
@@ -225,17 +199,13 @@
     const btn     = document.getElementById('langToggle');
     const speakDE = document.getElementById('speakDE');
     const speakEN = document.getElementById('speakEN');
+    const aud     = document.getElementById('aud');
 
-    // Аудио
-    const aud = document.getElementById('aud');
-
-    function stopAll(){
-      try { aud.pause(); aud.currentTime = 0; } catch(e){}
-    }
+    function stopAll(){ try{ aud.pause(); aud.currentTime = 0; }catch(e){} }
     function isPlaying(a){ return a && !a.paused && a.currentTime > 0 && !a.ended; }
 
     function setSpeakLabels(playing){
-      speakDE.textContent = playing ? 'Stopp' : 'Anhören'; // двойная p
+      speakDE.textContent = playing ? 'Stopp' : 'Anhören';
       speakEN.textContent = playing ? 'Stop'  : 'Listen';
       speakDE.setAttribute('aria-pressed', String(playing));
       speakEN.setAttribute('aria-pressed', String(playing));
@@ -252,16 +222,13 @@
         el.setAttribute('aria-hidden', String(!active));
       });
 
-      // Переключатель языка
       btn.textContent = (lang === 'de') ? 'EN' : 'DE';
       btn.setAttribute('aria-label', (lang === 'de') ? 'Switch to English' : 'Auf Deutsch umschalten');
 
-      // Титул страницы
       document.title = (lang === 'de')
         ? 'Station P4.1 – Gastroenterologie & Diabetologie'
         : 'Ward P4.1 – Gastroenterology & Diabetology';
 
-      // Остановить звук + сброс надписей
       stopAll();
       setSpeakLabels(false);
     }
@@ -270,47 +237,31 @@
 
     function handleSpeak(lang){
       const src = (lang === 'de') ? 'SoundDE.mp3' : 'SoundEN.mp3';
-
-      // если играет — стоп
-      if (isPlaying(aud)) {
-        stopAll();
-        setSpeakLabels(false);
-        return;
-      }
-      // запуск выбранной дорожки
+      if (isPlaying(aud)) { stopAll(); setSpeakLabels(false); return; }
       setSpeakLabels(true);
       aud.src = src;
       aud.currentTime = 0;
       const p = aud.play();
-      if (p && p.catch) p.catch(()=>{}); // молча игнорим блокировки автоплея
+      if (p && p.catch) p.catch(()=>{});
       aud.onended = ()=> setSpeakLabels(false);
     }
 
     speakDE.addEventListener('click', ()=> handleSpeak('de'));
     speakEN.addEventListener('click', ()=> handleSpeak('en'));
 
-    // ===== КАРУСЕЛЬ =====
+    // ===== КАРУСЕЛЬ (всегда анимированная) =====
     (function initCarousel(){
       const container = document.getElementById('carousel');
       const slides = Array.from(container.querySelectorAll('.slide'));
       if (slides.length <= 1) return;
 
-      // Если пользователь предпочитает меньше анимаций — показываем 1-й слайд и не крутим
-      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduceMotion) {
-        slides.forEach((img, i)=> img.classList.toggle('active', i === 0));
-        return;
-      }
-
-      // Убедимся, что первые кадры загружены, чтобы избежать «мигания»
+      // Предзагрузка (минимальная)
       slides.forEach(img => {
-        if (img.complete) return;
-        const preload = new Image();
-        preload.src = img.src;
+        if (!img.complete) { const p = new Image(); p.src = img.src; }
       });
 
       let idx = 0;
-      const DURATION = 4000; // 4 секунды между сменами
+      const DURATION = 4000; // 4 секунды
 
       setInterval(()=>{
         const prev = idx;
