@@ -50,9 +50,36 @@
     }
     .speak-btn:focus-visible{outline:2px solid #000;outline-offset:2px;}
 
-    /* Hero image centered in 920px column */
+    /* Hero: centered carousel in 920px column */
     .hero{max-width:920px;margin:0 auto 16px;padding:0 20px;}
-    .hero img{display:block;width:100%;height:auto;border-radius:6px;}
+    .hero-inner{
+      position:relative;
+      width:100%;
+      /* optional soft rounding */
+      border-radius:6px;
+      overflow:hidden;
+      /* let images define height; they are responsive */
+    }
+    .hero-inner img{
+      display:block;
+      width:100%;
+      height:auto;
+      /* Stack slides */
+      position:absolute;
+      inset:0;
+      /* Fade setup */
+      opacity:0;
+      transition:opacity 800ms ease-in-out;
+      /* prevent dragging ghost image on desktop */
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+    .hero-inner img.active{ opacity:1; position:relative; }
+
+    /* If user prefers reduced motion, disable transitions & autoplay */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-inner img{ transition:none; }
+    }
 
     /* Centered logo */
     .logo-wrap{display:grid;place-items:center;margin:32px 0;}
@@ -85,15 +112,33 @@
     <p class="lead lang lang-en"><strong>Ward P4.1 specializes in the care of gastroenterological diseases and complex metabolic disorders within the framework of diabetology.</strong></p>
   </header>
 
-  <!-- Фото строго по центру (колонка 920px) -->
+  <!-- Карусель фото: строго по центру (колонка 920px) -->
   <section class="hero" aria-label="Titelbild">
-    <img
-      src="Foto1.jpg"
-      alt="Titelbild der Station P4.1"
-      decoding="async"
-      fetchpriority="high"
-      loading="eager"
-    />
+    <div class="hero-inner" id="carousel">
+      <!-- Первый слайд активен сразу -->
+      <img
+        class="slide active"
+        src="Foto1.jpg"
+        alt="Titelbild der Station P4.1"
+        decoding="async"
+        fetchpriority="high"
+        loading="eager"
+      />
+      <img
+        class="slide"
+        src="Foto2.jpg"
+        alt="Zweites Foto – Station P4.1"
+        decoding="async"
+        loading="eager"
+      />
+      <img
+        class="slide"
+        src="Foto3.jpg"
+        alt="Drittes Foto – Station P4.1"
+        decoding="async"
+        loading="eager"
+      />
+    </div>
   </section>
 
   <main class="content">
@@ -148,7 +193,7 @@
     <h2 class="lang lang-en">Contact</h2>
     <address>
       <div class="lang lang-de active"><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
-      <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</strong></div>
+      <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</div>
 
       <div class="lang lang-de active">Adresse: Fichtengrund 1, 38126 Braunschweig</div>
       <div class="lang lang-en">Address: Fichtengrund 1, 38126 Braunschweig</div>
@@ -170,7 +215,7 @@
   <audio id="aud" preload="metadata"></audio>
 
   <script>
-    // Текущий год во всех местах
+    // Год во всех местах
     document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
 
     // Языки
@@ -181,16 +226,16 @@
     const speakDE = document.getElementById('speakDE');
     const speakEN = document.getElementById('speakEN');
 
+    // Аудио
+    const aud = document.getElementById('aud');
+
     function stopAll(){
-      try {
-        aud.pause();
-        aud.currentTime = 0;
-      } catch(e){}
+      try { aud.pause(); aud.currentTime = 0; } catch(e){}
     }
     function isPlaying(a){ return a && !a.paused && a.currentTime > 0 && !a.ended; }
 
     function setSpeakLabels(playing){
-      speakDE.textContent = playing ? 'Stopp' : 'Anhören';
+      speakDE.textContent = playing ? 'Stopp' : 'Anhören'; // двойная p
       speakEN.textContent = playing ? 'Stop'  : 'Listen';
       speakDE.setAttribute('aria-pressed', String(playing));
       speakEN.setAttribute('aria-pressed', String(playing));
@@ -223,9 +268,6 @@
 
     btn.addEventListener('click', ()=> setLang(current === 'de' ? 'en' : 'de'));
 
-    // Аудио: один элемент, подставляем дорожку по языку
-    const aud = document.getElementById('aud');
-
     function handleSpeak(lang){
       const src = (lang === 'de') ? 'SoundDE.mp3' : 'SoundEN.mp3';
 
@@ -246,6 +288,37 @@
 
     speakDE.addEventListener('click', ()=> handleSpeak('de'));
     speakEN.addEventListener('click', ()=> handleSpeak('en'));
+
+    // ===== КАРУСЕЛЬ =====
+    (function initCarousel(){
+      const container = document.getElementById('carousel');
+      const slides = Array.from(container.querySelectorAll('.slide'));
+      if (slides.length <= 1) return;
+
+      // Если пользователь предпочитает меньше анимаций — показываем 1-й слайд и не крутим
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) {
+        slides.forEach((img, i)=> img.classList.toggle('active', i === 0));
+        return;
+      }
+
+      // Убедимся, что первые кадры загружены, чтобы избежать «мигания»
+      slides.forEach(img => {
+        if (img.complete) return;
+        const preload = new Image();
+        preload.src = img.src;
+      });
+
+      let idx = 0;
+      const DURATION = 4000; // 4 секунды между сменами
+
+      setInterval(()=>{
+        const prev = idx;
+        idx = (idx + 1) % slides.length;
+        slides[prev].classList.remove('active');
+        slides[idx].classList.add('active');
+      }, DURATION);
+    })();
   </script>
 </body>
 </html>
