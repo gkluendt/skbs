@@ -4,59 +4,96 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Station P4.1 – Gastroenterologie & Diabetologie</title>
-  <style>
-    body{margin:0;font-family:sans-serif;line-height:1.6;background:#fff;color:#111;}
 
+  <!-- SEO / Icon -->
+  <meta name="description" content="Station P4.1 – Gastroenterologie & Diabetologie am Städtischen Klinikum Braunschweig. Versorgungsschwerpunkte, Kontakt und Informationen.">
+  <link rel="icon" href="favicon.ico">
+
+  <style>
+    /* Base */
+    body{margin:0;font-family:sans-serif;line-height:1.6;background:#fff;color:#111;}
+    ul{margin:0 0 16px 20px;}
+
+    /* Language toggle */
     .lang-btn{
-      position:fixed;top:14px;right:14px;z-index:10;
+      position:fixed;z-index:10;
+      top:max(14px, env(safe-area-inset-top));
+      right:max(14px, env(safe-area-inset-right));
       padding:8px 12px;border-radius:999px;
       font-weight:600;cursor:pointer;
-      border:1px solid #ccc;background:#fff;
-      color:#000; /* <-- добавили */
+      border:1px solid #ccc;background:#fff;color:#000;
     }
+    .lang-btn:focus-visible{outline:2px solid #000;outline-offset:2px;}
 
+    /* Layout blocks (max width 920px) */
     .header{max-width:920px;margin:32px auto 12px;padding:0 20px;}
-    h1{margin:0 0 10px;font-size:clamp(28px,4vw,40px);} 
+    .content{max-width:920px;margin:0 auto;padding:0 20px 40px;}
+    .contact{max-width:920px;margin:8px auto 64px;padding:0 20px;border-top:1px solid #ccc;}
+    footer{max-width:920px;margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
+
+    /* Typo */
+    h1{margin:0 0 10px;font-size:clamp(28px,4vw,40px);}
     .lead{font-size:18px;margin:0 0 12px;}
     .lead strong{font-weight:700;}
-    .hero img{display:block;width:100%;height:auto;}
-    .content{max-width:920px;margin:0 auto;padding:0 20px 40px;}
-    .logo-wrap{display:grid;place-items:center;margin:32px 0;}
-    .logo{max-width:260px;height:auto;}
-    .contact{max-width:920px;margin:8px auto 64px;padding:0 20px;border-top:1px solid #ccc;}
     .contact h2{font-size:24px;margin:18px 0 8px;}
     address{font-style:normal;}
-    footer{max-width:920px;margin:0 auto 40px;padding:0 20px;color:#555;font-size:14px;}
+
+    /* Lang visibility */
     .lang{display:none;}
     .lang.active{display:block;}
 
+    /* Speak buttons */
     .speak-btn{
       margin-left:12px;padding:6px 12px;border-radius:999px;
       border:1px solid #ccc;background:rgba(15,23,42,.08);
-      cursor:pointer;font-size:14px;
-      color:#000; /* <-- добавили */
+      cursor:pointer;font-size:14px;color:#000;
     }
+    .speak-btn:focus-visible{outline:2px solid #000;outline-offset:2px;}
 
-    ul{margin:0 0 16px 20px;}
-</style>
+    /* Hero image centered in 920px column */
+    .hero{max-width:920px;margin:0 auto 16px;padding:0 20px;}
+    .hero img{display:block;width:100%;height:auto;border-radius:6px;}
 
+    /* Centered logo */
+    .logo-wrap{display:grid;place-items:center;margin:32px 0;}
+    .logo{max-width:260px;height:auto;}
+
+    /* Print */
+    @media print{
+      .lang-btn, .speak-btn, audio { display:none !important; }
+      body { color:#000; }
+    }
+  </style>
 </head>
 <body>
-  <button id="langToggle" class="lang-btn">EN</button>
+  <!-- Language toggle -->
+  <button id="langToggle" class="lang-btn" type="button" aria-label="Switch to English">EN</button>
 
   <header class="header">
-    <!-- Заголовок ТОЛЬКО "Station P4.1" + кнопка прослушивания -->
-    <h1 class="lang lang-de active">Station P4.1 <button id="speakDE" class="speak-btn" aria-label="Text anhören">Anhören</button></h1>
-    <h1 class="lang lang-en">Ward P4.1 <button id="speakEN" class="speak-btn" aria-label="Listen to the text">Listen</button></h1>
+    <!-- Заголовок + кнопки прослушивания -->
+    <h1 class="lang lang-de active">
+      Station P4.1
+      <button id="speakDE" class="speak-btn" type="button" aria-label="Text anhören" aria-pressed="false">Anhören</button>
+    </h1>
+    <h1 class="lang lang-en">
+      Ward P4.1
+      <button id="speakEN" class="speak-btn" type="button" aria-label="Listen to the text" aria-pressed="false">Listen</button>
+    </h1>
 
-    <!-- Жирная вводная строка сразу под заголовком -->
+    <!-- Лид -->
     <p class="lead lang lang-de active"><strong>Die Station P4.1 ist auf die Versorgung von gastroenterologischen Erkrankungen und komplexen Stoffwechselstörungen im Rahmen der Diabetologie spezialisiert.</strong></p>
     <p class="lead lang lang-en"><strong>Ward P4.1 specializes in the care of gastroenterological diseases and complex metabolic disorders within the framework of diabetology.</strong></p>
   </header>
 
-  <!-- Фото сразу после заголовка/лида -->
+  <!-- Фото строго по центру (колонка 920px) -->
   <section class="hero" aria-label="Titelbild">
-    <img src="Foto1.jpg" alt="Titelbild" />
+    <img
+      src="Foto1.jpg"
+      alt="Titelbild der Station P4.1"
+      decoding="async"
+      fetchpriority="high"
+      loading="eager"
+    />
   </section>
 
   <main class="content">
@@ -102,7 +139,7 @@
 
     <!-- Логотип по центру -->
     <div class="logo-wrap">
-      <img class="logo" src="Logo.jpg" alt="Logo" />
+      <img class="logo" src="Logo.jpg" alt="Logo" decoding="async" loading="lazy" />
     </div>
   </main>
 
@@ -112,65 +149,103 @@
     <address>
       <div class="lang lang-de active"><strong>Station P4.1 – Gastroenterologie &amp; Diabetologie</strong></div>
       <div class="lang lang-en"><strong>Ward P4.1 – Gastroenterology &amp; Diabetology</strong></div>
-      <div class="lang lang-de active">Adresse: &lt;Fichtengrund 1, 38126 Braunschweig&gt;</div>
-      <div class="lang lang-en">Address: &lt;Fichtengrund 1, 38126 Braunschweig&gt;</div>
-      <div>E-Mail SL: <a href="mailto:a.lange@skbs.de">a.lange@skbs.de</a></div>
-<div>E-Mail SSL: <a href="mailto:g.kluendt@skbs.de">g.kluendt@skbs.de</a></div>
 
-      <div>Telefon Station: +49 531 5952440</div>
-       <div>Telefon SL: +49 531 5952708</div>
-    
+      <div class="lang lang-de active">Adresse: Fichtengrund 1, 38126 Braunschweig</div>
+      <div class="lang lang-en">Address: Fichtengrund 1, 38126 Braunschweig</div>
+
+      <div>E-Mail SL: <a href="mailto:a.lange@skbs.de">a.lange@skbs.de</a></div>
+      <div>E-Mail SSL: <a href="mailto:g.kluendt@skbs.de">g.kluendt@skbs.de</a></div>
+
+      <div>Telefon Station: <a href="tel:+495315952440">+49 531 5952440</a></div>
+      <div>Telefon SL: <a href="tel:+495315952708">+49 531 5952708</a></div>
     </address>
   </section>
 
   <footer>
-    <p class="lang lang-de active">© <span id="year"></span> Station P4.1 – Städtisches Klinikum Braunschweig gGmbH. Alle Rechte vorbehalten.</p>
-    <p class="lang lang-en">© <span id="year2"></span> Ward P4.1 – Städtisches Klinikum Braunschweig. All rights reserved.</p>
+    <p class="lang lang-de active">© <span class="js-year"></span> Station P4.1 – Städtisches Klinikum Braunschweig gGmbH. Alle Rechte vorbehalten.</p>
+    <p class="lang lang-en">© <span class="js-year"></span> Ward P4.1 – Städtisches Klinikum Braunschweig. All rights reserved.</p>
   </footer>
 
-  <audio id="audDE" src="SoundDE.mp3" preload="auto"></audio>
-  <audio id="audEN" src="SoundEN.mp3" preload="auto"></audio>
+  <!-- Один аудиоплеер, подставляем src по языку -->
+  <audio id="aud" preload="metadata"></audio>
 
   <script>
-    const y=new Date().getFullYear();
-    document.getElementById('year').textContent=y;
-    document.getElementById('year2').textContent=y;
+    // Текущий год во всех местах
+    document.querySelectorAll('.js-year').forEach(el => el.textContent = new Date().getFullYear());
 
-    let current='de';
-    const btn=document.getElementById('langToggle');
-    function setLang(lang){
-      current=lang;
-      document.querySelectorAll('.lang').forEach(el=>{
-        el.classList.toggle('active',el.classList.contains('lang-'+lang));
-      });
-      btn.textContent=(lang==='de')?'EN':'DE';
-      stopAll();
-      setSpeakLabels(false);
+    // Языки
+    let current = 'de';
+    document.documentElement.lang = current;
+
+    const btn     = document.getElementById('langToggle');
+    const speakDE = document.getElementById('speakDE');
+    const speakEN = document.getElementById('speakEN');
+
+    function stopAll(){
+      try {
+        aud.pause();
+        aud.currentTime = 0;
+      } catch(e){}
     }
-    btn.addEventListener('click',()=>setLang(current==='de'?'en':'de'));
+    function isPlaying(a){ return a && !a.paused && a.currentTime > 0 && !a.ended; }
 
-    const audDE=document.getElementById('audDE');
-    const audEN=document.getElementById('audEN');
-    const speakDE=document.getElementById('speakDE');
-    const speakEN=document.getElementById('speakEN');
-
-    function stopAll(){[audDE,audEN].forEach(a=>{try{a.pause();a.currentTime=0;}catch(e){}});}
-    function isPlaying(a){return !a.paused && a.currentTime>0 && !a.ended;}
     function setSpeakLabels(playing){
       speakDE.textContent = playing ? 'Stopp' : 'Anhören';
       speakEN.textContent = playing ? 'Stop'  : 'Listen';
+      speakDE.setAttribute('aria-pressed', String(playing));
+      speakEN.setAttribute('aria-pressed', String(playing));
     }
+
+    function setLang(lang){
+      current = lang;
+      document.documentElement.lang = lang;
+
+      document.querySelectorAll('.lang').forEach(el => {
+        const active = el.classList.contains('lang-' + lang);
+        el.classList.toggle('active', active);
+        el.toggleAttribute('inert', !active);
+        el.setAttribute('aria-hidden', String(!active));
+      });
+
+      // Переключатель языка
+      btn.textContent = (lang === 'de') ? 'EN' : 'DE';
+      btn.setAttribute('aria-label', (lang === 'de') ? 'Switch to English' : 'Auf Deutsch umschalten');
+
+      // Титул страницы
+      document.title = (lang === 'de')
+        ? 'Station P4.1 – Gastroenterologie & Diabetologie'
+        : 'Ward P4.1 – Gastroenterology & Diabetology';
+
+      // Остановить звук + сброс надписей
+      stopAll();
+      setSpeakLabels(false);
+    }
+
+    btn.addEventListener('click', ()=> setLang(current === 'de' ? 'en' : 'de'));
+
+    // Аудио: один элемент, подставляем дорожку по языку
+    const aud = document.getElementById('aud');
 
     function handleSpeak(lang){
-      const audio = (lang==='de')?audDE:audEN;
-      if(isPlaying(audio)){ stopAll(); setSpeakLabels(false); return; }
-      stopAll(); setSpeakLabels(true); audio.currentTime=0;
-      const p=audio.play(); if(p && p.catch) p.catch(()=>{});
-      audio.onended=()=> setSpeakLabels(false);
+      const src = (lang === 'de') ? 'SoundDE.mp3' : 'SoundEN.mp3';
+
+      // если играет — стоп
+      if (isPlaying(aud)) {
+        stopAll();
+        setSpeakLabels(false);
+        return;
+      }
+      // запуск выбранной дорожки
+      setSpeakLabels(true);
+      aud.src = src;
+      aud.currentTime = 0;
+      const p = aud.play();
+      if (p && p.catch) p.catch(()=>{}); // молча игнорим блокировки автоплея
+      aud.onended = ()=> setSpeakLabels(false);
     }
 
-    speakDE.addEventListener('click',()=>handleSpeak('de'));
-    speakEN.addEventListener('click',()=>handleSpeak('en'));
+    speakDE.addEventListener('click', ()=> handleSpeak('de'));
+    speakEN.addEventListener('click', ()=> handleSpeak('en'));
   </script>
 </body>
 </html>
