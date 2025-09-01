@@ -23,7 +23,7 @@
       font-weight:600;cursor:pointer;
       border:1px solid #ccc;background:#fff;color:#000;
     }
-   .lang-btn:focus-visible{outline:2px solid #000;outline-offset:2px;}
+    .lang-btn:focus-visible{outline:2px solid #000;outline-offset:2px;}
 
     /* Layout blocks (max width 920px) */
     .header{max-width:920px;margin:32px auto 12px;padding:0 20px;}
@@ -42,17 +42,13 @@
     .lang{display:none;}
     .lang.active{display:block;}
 
-    /* .speak-btn{
-  margin-left:12px;
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,0.3); /* полупрозрачная рамка */
-  background-color:transparent;     /* полностью прозрачный фон */
-  cursor:pointer;
-  font-size:14px;
-  color:#000;
-   }
-   
+    /* Speak buttons */
+    .speak-btn{
+      margin-left:12px;padding:6px 12px;border-radius:999px;
+      border:1px solid #ccc;background:rgba(15,23,42,.08);
+      cursor:pointer;font-size:14px;color:#000;
+    }
+    .speak-btn:focus-visible{outline:2px solid #000;outline-offset:2px;}
 
     /* Hero: centered carousel in 920px column */
     .hero{max-width:920px;margin:0 auto 16px;padding:0 20px;}
@@ -273,3 +269,4 @@
   </script>
 </body>
 </html>
+
