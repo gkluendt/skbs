@@ -43,11 +43,21 @@
     .lang.active{display:block;}
 
     /* Speak buttons */
-    .speak-btn{
-      margin-left:12px;padding:6px 12px;border-radius:999px;
-      border:1px solid #ccc;background:rgba(15,23,42,.08);
-      cursor:pointer;font-size:14px;color:#000;
-    }
+.speak-btn{
+  margin-left:12px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid #ccc;       /* если рамка нужна */
+  background-color: transparent; /* фон прозрачный */
+  cursor:pointer;
+  font-size:14px;
+  color:#000;
+}
+.speak-btn:focus-visible{
+  outline:2px solid #000;
+  outline-offset:2px;
+}
+
     .speak-btn:focus-visible{outline:2px solid #000;outline-offset:2px;}
 
     /* Hero: centered carousel in 920px column */
